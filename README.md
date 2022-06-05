@@ -1,14 +1,14 @@
-# blancoVueComponent
+# blancoPinia
 
-このプロジェクトはblancoVueComponentのTypeScript版です。上田オリジナル版となります。
+このプロジェクトはblancoPiniaのTypeScript版です。上田オリジナル版となります。
 
-blancoVueComponent は「Vueコンポーネント定義書」というExcel様式を記入するだけで 簡単に VueComponentのスタブを作成できるようにするためのツールです。
+blancoPinia は「Vueストア定義書」というExcel様式を記入するだけで 簡単にPinia向けの Vue ストアの定義コードを作成できるツールです。
 
- 1.ごく普通の VueComponentのためのソースコードを生成します。
+ 1.ごく普通の Pinia対応のVueストアのためのソースコードを生成します。
  2.生成後のソースコードは それ単独で動作することができます。余計な *.jarファイルなどの実行時ライブラリを一切必要としません。
  3.導入すると、ドキュメントとソースコードが必ず一致するという効果があります。
 
-いまのところblancoVueComponentは本家にはありません。
+いまのところblancoPiniaの本家はここです。
 
 ## maven 対応について
 
@@ -52,6 +52,7 @@ mvn deploy
 * https://github.com/uedaueo/blancofw-maven2 を clone
 * github から access_key を取得
 * pom.xml のリポジトリURLをclone先に変更
+* 現時点ではbranchは
 
 ~/.m2/settings.xml に以下のように記述することで、deploy可能となります。（useridとaccess_keyは実在のものをご使用下さい）
 

@@ -149,8 +149,12 @@ public class BlancoPiniaXml2TypeScriptClass {
                 throw new IllegalArgumentException(fBundle.getXml2sourceFileErr007(classStructure.getName()));
             }
 
-            boolean useGetters = classStructure.getGettersList() != null && classStructure.getGettersList().size() != 0;
-            boolean useActions = classStructure.getActionsList() != null && classStructure.getActionsList().size() != 0;
+            if (isVerbose()) {
+                System.out.println("%%% GettersList size = " + (classStructure.getGettersList() != null ? classStructure.getGettersList().size() : "null"));
+            }
+
+            boolean useGetters = isGettersDefined(classStructure.getGettersList());
+            boolean useActions = isActionsDefined(classStructure.getActionsList());
 
             /* Generate defineStore calling. */
             generateDefineStore(classStructure, argDirectoryTarget, useGetters, useActions);
@@ -454,7 +458,7 @@ public class BlancoPiniaXml2TypeScriptClass {
         plainTextList.add("/** " + fBundle.getXml2sourceFileGettersDefine() + " */");
         plainTextList.add("export declare type " + gettersTree + "<S extends StateTree> = {");
         for (List<BlancoPiniaGettersStructure> gettersStructureList : argClassStructure.getGettersList()) {
-            defineGettersFunction(plainTextList, gettersStructureList);
+            defineGetters(plainTextList, gettersStructureList);
         }
         plainTextList.add("}");
 
@@ -549,7 +553,7 @@ public class BlancoPiniaXml2TypeScriptClass {
         plainTextList.add("export declare type " + actionsTree + " = {");
         for (List<BlancoPiniaActionsStructure> actionsStructureList : argClassStructure.getActionsList()) {
             createActionsLangDoc(plainTextList, actionsStructureList);
-            defineActionsFunction(plainTextList, actionsStructureList);
+            defineActions(plainTextList, actionsStructureList);
         }
         plainTextList.add("}");
 
@@ -648,7 +652,7 @@ public class BlancoPiniaXml2TypeScriptClass {
         argListText.add(" */");
     }
 
-    private void defineGettersFunction(List<String> argListText, List<BlancoPiniaGettersStructure> gettersStructureList) {
+    private void defineGetters(List<String> argListText, List<BlancoPiniaGettersStructure> gettersStructureList) {
         int size = gettersStructureList.size();
         BlancoPiniaGettersStructure firstStructure = gettersStructureList.get(0);
         argListText.add(firstStructure.getName() + "(state: S): {");
@@ -675,7 +679,7 @@ public class BlancoPiniaXml2TypeScriptClass {
         argListText.add("}");
     }
 
-    private void defineActionsFunction(List<String> argListText, List<BlancoPiniaActionsStructure> actionsStructureList) {
+    private void defineActions(List<String> argListText, List<BlancoPiniaActionsStructure> actionsStructureList) {
         int size = actionsStructureList.size();
         BlancoPiniaActionsStructure firstStructure = actionsStructureList.get(0);
         argListText.add(firstStructure.getName() + "(");
@@ -700,6 +704,32 @@ public class BlancoPiniaXml2TypeScriptClass {
             firstType = "Promise<" + firstType + ">";
         }
         argListText.add("): " + firstType + ";");
+    }
+
+    private boolean isGettersDefined(List<List<BlancoPiniaGettersStructure>> gettersStructureLists) {
+        boolean isDefined = false;
+        for (List<BlancoPiniaGettersStructure> gettersStructureList : gettersStructureLists) {
+            if (gettersStructureList != null && gettersStructureList.size() > 0) {
+                BlancoPiniaGettersStructure gettersStructure = gettersStructureList.get(0);
+                if (BlancoStringUtil.null2Blank(gettersStructure.getName()).length() > 0) {
+                    isDefined = true;
+                }
+            }
+        }
+        return isDefined;
+    }
+
+    private boolean isActionsDefined(List<List<BlancoPiniaActionsStructure>> actionsStructureLists) {
+        boolean isDefined = false;
+        for (List<BlancoPiniaActionsStructure> actionsStructureList : actionsStructureLists) {
+            if (actionsStructureList != null && actionsStructureList.size() > 0) {
+                BlancoPiniaActionsStructure actionsStructure = actionsStructureList.get(0);
+                if (BlancoStringUtil.null2Blank(actionsStructure.getName()).length() > 0) {
+                    isDefined = true;
+                }
+            }
+        }
+        return isDefined;
     }
 
     private String getTabSpace() {

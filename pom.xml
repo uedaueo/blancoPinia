@@ -231,7 +231,7 @@
 							<target>
 								<taskdef name="blancoresourcebundle" classname="blanco.resourcebundle.task.BlancoResourceBundleTask" classpathref="maven.compile.classpath">
 								</taskdef>
-								<blancoresourcebundle metadir="meta/program" encoding="${project.build.sourceEncoding}" />
+								<blancoresourcebundle metadir="meta/program" commenttimestamp="false" encoding="${project.build.sourceEncoding}" />
 							</target>
 						</configuration>
 						<goals>

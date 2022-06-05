@@ -696,6 +696,9 @@ public class BlancoPiniaXml2TypeScriptClass {
         if (BlancoStringUtil.null2Blank(firstGenerics).length() > 0) {
             firstType = firstType + "<" + BlancoPiniaUtil.getSimpleClassName(firstGenerics) + ">";
         }
+        if (firstStructure.getAsync()) {
+            firstType = "Promise<" + firstType + ">";
+        }
         argListText.add("): " + firstType + ";");
     }
 

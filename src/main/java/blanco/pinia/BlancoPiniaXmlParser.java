@@ -291,10 +291,13 @@ public class BlancoPiniaXmlParser {
         final List<BlancoXmlElement> gettersList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListGetters());
         for (BlancoXmlElement element : gettersList) {
-            objClassStructure.getGettersList().add(this.parseGetters(element, namedExportedHeaderList, objClassStructure));
+            List<BlancoPiniaGettersStructure> list = this.parseGetters(element, namedExportedHeaderList, objClassStructure);
+            if (list.size() != 0) {
+                objClassStructure.getGettersList().add(list);
+            }
         }
 
-        if (gettersList.size() != 0) {
+        if (objClassStructure.getGettersList().size() != 0) {
             /*
              * Add imports to defineGetters file.
              */
@@ -316,10 +319,13 @@ public class BlancoPiniaXmlParser {
         final List<BlancoXmlElement> actionsList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListActions());
         for (BlancoXmlElement element : actionsList) {
-            objClassStructure.getActionsList().add(this.parseActions(element, namedExportedHeaderList, objClassStructure));
+            List<BlancoPiniaActionsStructure> list = this.parseActions(element, namedExportedHeaderList, objClassStructure);
+            if (list.size() != 0) {
+                objClassStructure.getActionsList().add(list);
+            }
         }
 
-        if (actionsList.size() != 0) {
+        if (objClassStructure.getActionsList().size() != 0) {
             /*
              * Add imports to defineActions file.
              */

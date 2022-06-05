@@ -336,7 +336,7 @@ public class BlancoPiniaXml2TypeScriptClass {
         // Create interface first.
         fCgInterface = fCgFactory.createInterface(stateType, fBundle.getXml2sourceFileStateDefine());
         fCgSourceFile.getInterfaceList().add(fCgInterface);
-        fCgInterface.setAccess("export");
+        fCgInterface.setAccess("public");
 
         for (BlancoPiniaStateStructure stateStructure : argClassStructure.getStateList()) {
             BlancoCgField fieldInf = fCgFactory.createField(

@@ -693,7 +693,7 @@ public class BlancoPiniaXml2TypeScriptClass {
             if (i > 1) {
                 addCommaToListString(argListText);
             }
-            argListText.add(actionsStructure.getName() + ": " + type);
+            argListText.add(actionsStructure.getName() + (actionsStructure.getNullable() ? "?: " : ": ") + type);
         }
         String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
         String firstGenerics = firstStructure.getGeneric();

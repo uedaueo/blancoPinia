@@ -158,6 +158,9 @@
         <tablecolumn name="async">
           <value>非同期</value>
         </tablecolumn>
+        <tablecolumn name="nullable">
+          <value>Nullable</value>
+        </tablecolumn>
         <tablecolumn name="description">
           <value>説明</value>
         </tablecolumn>

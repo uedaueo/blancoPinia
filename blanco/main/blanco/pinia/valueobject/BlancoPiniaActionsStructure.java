@@ -66,12 +66,12 @@ public class BlancoPiniaActionsStructure {
     private Boolean fAsync = false;
 
     /**
-     * 変更不可変数かどうか
+     * nullableかどうか
      *
-     * フィールド: [value]。
+     * フィールド: [nullable]。
      * デフォルト: [false]。
      */
-    private Boolean fValue = false;
+    private Boolean fNullable = false;
 
     /**
      * コンストラクタ引数かどう
@@ -326,26 +326,26 @@ public class BlancoPiniaActionsStructure {
     }
 
     /**
-     * フィールド [value] の値を設定します。
+     * フィールド [nullable] の値を設定します。
      *
-     * フィールドの説明: [変更不可変数かどうか]。
+     * フィールドの説明: [nullableかどうか]。
      *
-     * @param argValue フィールド[value]に設定する値。
+     * @param argNullable フィールド[nullable]に設定する値。
      */
-    public void setValue(final Boolean argValue) {
-        fValue = argValue;
+    public void setNullable(final Boolean argNullable) {
+        fNullable = argNullable;
     }
 
     /**
-     * フィールド [value] の値を取得します。
+     * フィールド [nullable] の値を取得します。
      *
-     * フィールドの説明: [変更不可変数かどうか]。
+     * フィールドの説明: [nullableかどうか]。
      * デフォルト: [false]。
      *
-     * @return フィールド[value]から取得した値。
+     * @return フィールド[nullable]から取得した値。
      */
-    public Boolean getValue() {
-        return fValue;
+    public Boolean getNullable() {
+        return fNullable;
     }
 
     /**
@@ -594,7 +594,7 @@ public class BlancoPiniaActionsStructure {
         buf.append(",default=" + fDefault);
         buf.append(",abstract=" + fAbstract);
         buf.append(",async=" + fAsync);
-        buf.append(",value=" + fValue);
+        buf.append(",nullable=" + fNullable);
         buf.append(",constArg=" + fConstArg);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
@@ -651,9 +651,9 @@ public class BlancoPiniaActionsStructure {
         // Name: fAsync
         // Type: java.lang.Boolean
         target.fAsync = this.fAsync;
-        // Name: fValue
+        // Name: fNullable
         // Type: java.lang.Boolean
-        target.fValue = this.fValue;
+        target.fNullable = this.fNullable;
         // Name: fConstArg
         // Type: java.lang.Boolean
         target.fConstArg = this.fConstArg;

@@ -616,6 +616,10 @@ public class BlancoPiniaXmlParser {
             actionsStructure.setAsync("true".equals(BlancoXmlBindingUtil
                     .getTextContent(elementList, "async")));
 
+            // Supports Nullable.
+            actionsStructure.setNullable("true".equals(BlancoXmlBindingUtil
+                    .getTextContent(elementList, "nullable")));
+
             // Supports description.
             actionsStructure.setDescription(BlancoXmlBindingUtil
                     .getTextContent(elementList, "description"));

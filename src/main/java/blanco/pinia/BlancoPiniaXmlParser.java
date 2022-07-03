@@ -325,7 +325,7 @@ public class BlancoPiniaXmlParser {
             }
         }
 
-        if (objClassStructure.getActionsList().size() != 0) {
+        if (objClassStructure.getActionsList().size() != 0 || BlancoStringUtil.null2Blank(objClassStructure.getImportedActionsTree()).length() > 0) {
             /*
              * Add imports to defineActions file.
              */
@@ -393,6 +393,9 @@ public class BlancoPiniaXmlParser {
                 .setGettersList(new ArrayList<>());
         argObjClassStructure
                 .setActionsList(new ArrayList<>());
+        argObjClassStructure.setImportedActionsTree(
+                BlancoXmlBindingUtil.getTextContent(argElementCommon, "importedActionsTree")
+        );
     }
 
     private void parseState(

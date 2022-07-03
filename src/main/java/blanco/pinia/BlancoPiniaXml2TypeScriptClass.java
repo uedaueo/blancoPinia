@@ -154,10 +154,14 @@ public class BlancoPiniaXml2TypeScriptClass {
             }
 
             boolean useGetters = isGettersDefined(classStructure.getGettersList());
-            boolean useActions = isActionsDefined(classStructure.getActionsList());
+            boolean useImportedActions = BlancoStringUtil.null2Blank(classStructure.getImportedActionsTree()).length() > 0;
+            boolean useActions = false;
+            if (!useImportedActions) {
+                useActions = isActionsDefined(classStructure.getActionsList());
+            }
 
             /* Generate defineStore calling. */
-            generateDefineStore(classStructure, argDirectoryTarget, useGetters, useActions);
+            generateDefineStore(classStructure, argDirectoryTarget, useGetters, useActions || useImportedActions);
 
             /* Generate props options */
             generateState(classStructure, argDirectoryTarget);
@@ -168,8 +172,8 @@ public class BlancoPiniaXml2TypeScriptClass {
             }
 
             /* Generate actions functions */
-            if (useActions) {
-                generateDefineActions(classStructure, argDirectoryTarget);
+            if (useActions || useImportedActions) {
+                generateDefineActions(classStructure, useActions, argDirectoryTarget);
             }
         }
         return structures;
@@ -501,11 +505,13 @@ public class BlancoPiniaXml2TypeScriptClass {
      * generate actions definitions.
      *
      * @param argClassStructure
+     * @param useActions
      * @param argDirectoryTarget
      * @throws IOException
      */
     public void generateDefineActions(
             final BlancoPiniaClassStructure argClassStructure,
+            final boolean useActions,
             final File argDirectoryTarget) throws IOException {
         /*
          * The output directory will be in the format specified by the targetStyle argument of
@@ -530,6 +536,9 @@ public class BlancoPiniaXml2TypeScriptClass {
         String actionsDefineName = "Define" + storeName + "Actions";
         String actionsDefineFunc = BlancoNameAdjuster.toParameterName(actionsDefineName);
         String actionsTree = storeName + "ActionsTree";
+        if (!useActions) {
+            actionsTree = argClassStructure.getImportedActionsTree();
+        }
 
         // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
@@ -548,14 +557,16 @@ public class BlancoPiniaXml2TypeScriptClass {
         List<String> plainTextList = fCgClass.getPlainTextList();
         plainTextList.add("");
 
-        // declare getters tree type
-        plainTextList.add("/** " + fBundle.getXml2sourceFileActionsDefine() + " */");
-        plainTextList.add("export declare type " + actionsTree + " = {");
-        for (List<BlancoPiniaActionsStructure> actionsStructureList : argClassStructure.getActionsList()) {
-            createActionsLangDoc(plainTextList, actionsStructureList);
-            defineActions(plainTextList, actionsStructureList);
+        // declare actions tree type
+        if (useActions) {
+            plainTextList.add("/** " + fBundle.getXml2sourceFileActionsDefine() + " */");
+            plainTextList.add("export declare type " + actionsTree + " = {");
+            for (List<BlancoPiniaActionsStructure> actionsStructureList : argClassStructure.getActionsList()) {
+                createActionsLangDoc(plainTextList, actionsStructureList);
+                defineActions(plainTextList, actionsStructureList);
+            }
+            plainTextList.add("}");
         }
-        plainTextList.add("}");
 
         // Create defineActionsFunction.
         BlancoCgMethod defineFunction = fCgFactory.createMethod(actionsDefineFunc, argClassStructure.getDescription());

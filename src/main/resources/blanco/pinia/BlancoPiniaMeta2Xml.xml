@@ -23,6 +23,9 @@
         <propertykey name="fileDescription" waitX="2">
           <value>ファイル説明</value>
         </propertykey>
+        <propertykey name="importedActionsTree" waitX="2">
+          <value>外部定義されたActionsTree</value>
+        </propertykey>
         <propertykey name="adjustFieldName" waitX="2">
           <value>フィールド名の変形</value>
         </propertykey>

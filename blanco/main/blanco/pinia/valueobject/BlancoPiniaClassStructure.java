@@ -144,6 +144,13 @@ public class BlancoPiniaClassStructure {
     private String fFileDescription;
 
     /**
+     * 外部定義された ActionsTree を使う場合は型名を指定します。import 文は「 Vueストア定義・Actions・ヘッダ情報」に記述します。
+     *
+     * フィールド: [importedActionsTree]。
+     */
+    private String fImportedActionsTree;
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [ストア名を指定します。必須項目です。]。
@@ -551,6 +558,28 @@ public class BlancoPiniaClassStructure {
     }
 
     /**
+     * フィールド [importedActionsTree] の値を設定します。
+     *
+     * フィールドの説明: [外部定義された ActionsTree を使う場合は型名を指定します。import 文は「 Vueストア定義・Actions・ヘッダ情報」に記述します。]。
+     *
+     * @param argImportedActionsTree フィールド[importedActionsTree]に設定する値。
+     */
+    public void setImportedActionsTree(final String argImportedActionsTree) {
+        fImportedActionsTree = argImportedActionsTree;
+    }
+
+    /**
+     * フィールド [importedActionsTree] の値を取得します。
+     *
+     * フィールドの説明: [外部定義された ActionsTree を使う場合は型名を指定します。import 文は「 Vueストア定義・Actions・ヘッダ情報」に記述します。]。
+     *
+     * @return フィールド[importedActionsTree]から取得した値。
+     */
+    public String getImportedActionsTree() {
+        return fImportedActionsTree;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -583,6 +612,7 @@ public class BlancoPiniaClassStructure {
         buf.append(",gettersList=" + fGettersList);
         buf.append(",actionsList=" + fActionsList);
         buf.append(",fileDescription=" + fFileDescription);
+        buf.append(",importedActionsTree=" + fImportedActionsTree);
         buf.append("]");
         return buf.toString();
     }
@@ -659,5 +689,8 @@ public class BlancoPiniaClassStructure {
         // Name: fFileDescription
         // Type: java.lang.String
         target.fFileDescription = this.fFileDescription;
+        // Name: fImportedActionsTree
+        // Type: java.lang.String
+        target.fImportedActionsTree = this.fImportedActionsTree;
     }
 }

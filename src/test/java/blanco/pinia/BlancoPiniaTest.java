@@ -9,13 +9,14 @@
  */
 package blanco.pinia;
 
-import blanco.valueobjectts.task.BlancoValueObjectTsProcessImpl;
-import blanco.valueobjectts.task.valueobject.BlancoValueObjectTsProcessInput;
+import java.io.IOException;
+
+import org.junit.jupiter.api.Test;
+
 import blanco.pinia.task.BlancoPiniaProcessImpl;
 import blanco.pinia.task.valueobject.BlancoPiniaProcessInput;
-import org.junit.Test;
-
-import java.io.IOException;
+import blanco.valueobjectts.task.BlancoValueObjectTsProcessImpl;
+import blanco.valueobjectts.task.valueobject.BlancoValueObjectTsProcessInput;
 
 /**
  * Generation test for TypeScript.

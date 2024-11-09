@@ -463,13 +463,21 @@ public class BlancoPiniaXml2TypeScriptClass {
 
         // declare getters tree type
         plainTextList.add("/** " + fBundle.getXml2sourceFileGettersDefine() + " */");
-        plainTextList.add("export declare type " + gettersTree + "<S extends StateTree> = {");
+        if (BlancoPiniaUtil.supportedPiniaVersion >= BlancoPiniaConstants.PINIA_MAJOR_VERSION_2) {
+            plainTextList.add("export interface " + gettersTree + "<S extends StateTree> extends _GettersTree<S> {");
+        } else {
+            plainTextList.add("export declare type " + gettersTree + "<S extends StateTree> = {");
+        }
         int i = 0;
         for (List<BlancoPiniaGettersStructure> gettersStructureList : argClassStructure.getGettersList()) {
             if (i > 0) {
                 addCommaToListString(plainTextList);
             }
-            defineGetters(plainTextList, gettersStructureList);
+            if (BlancoPiniaUtil.supportedPiniaVersion >= BlancoPiniaConstants.PINIA_MAJOR_VERSION_2) {
+                defineGetters4Pinia2(plainTextList, gettersStructureList);
+            } else {
+                defineGetters(plainTextList, gettersStructureList);
+            }
             i++;
         }
         plainTextList.add("}");
@@ -677,6 +685,40 @@ public class BlancoPiniaXml2TypeScriptClass {
         int size = gettersStructureList.size();
         BlancoPiniaGettersStructure firstStructure = gettersStructureList.get(0);
         argListText.add(firstStructure.getName() + "(state: S): {");
+        createGettersLangDoc(argListText, gettersStructureList);
+        argListText.add("(");
+        for (int i = 1; i < size; i++) {
+            BlancoPiniaGettersStructure gettersStructure = gettersStructureList.get(i);
+            String type = BlancoPiniaUtil.getSimpleClassName(gettersStructure.getType());
+            String generics = gettersStructure.getGeneric();
+            if (BlancoStringUtil.null2Blank(generics).length() > 0) {
+                type = type + "<" + BlancoPiniaUtil.getSimpleClassName(generics) + ">";
+            }
+            if (i > 1) {
+                addCommaToListString(argListText);
+            }
+            if (gettersStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
+                type = type + " | undefined | null";
+            }
+            argListText.add(gettersStructure.getName() + ": " + type);
+        }
+        String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
+        String firstGenerics = firstStructure.getGeneric();
+        if (BlancoStringUtil.null2Blank(firstGenerics).length() > 0) {
+            firstType = firstType + "<" + BlancoPiniaUtil.getSimpleClassName(firstGenerics) + ">";
+        }
+        if (firstStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
+            firstType = firstType + " | undefined | null";
+        }
+        argListText.add("): " + firstType);
+        argListText.add("}");
+    }
+
+    private void defineGetters4Pinia2(List<String> argListText, List<BlancoPiniaGettersStructure> gettersStructureList) {
+        /* Not support Nullable on lesser pinia2 mode, but keep it for compatible. */
+        int size = gettersStructureList.size();
+        BlancoPiniaGettersStructure firstStructure = gettersStructureList.get(0);
+        argListText.add(firstStructure.getName() + ": (state: UnwrapRef<S>) => {");
         createGettersLangDoc(argListText, gettersStructureList);
         argListText.add("(");
         for (int i = 1; i < size; i++) {

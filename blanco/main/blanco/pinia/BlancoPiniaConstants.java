@@ -20,7 +20,7 @@ public class BlancoPiniaConstants {
      * 項目番号:3<br>
      * バージョン番号。
      */
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "3.0.3";
 
     /**
      * 項目番号:4<br>
@@ -69,4 +69,16 @@ public class BlancoPiniaConstants {
      * 実装クラス名のサフィックス
      */
     public static final String IMPLECLASS_SUFFIX = "Imple";
+
+    /**
+     * 項目番号:12<br>
+     * Pinia の Major Version 1 を表す定数です。
+     */
+    public static final Integer PINIA_MAJOR_VERSION_1 = 1;
+
+    /**
+     * 項目番号:13<br>
+     * Pinia の Major Version 2 を表す定数です。
+     */
+    public static final Integer PINIA_MAJOR_VERSION_2 = 2;
 }

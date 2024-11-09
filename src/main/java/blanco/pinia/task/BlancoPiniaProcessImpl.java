@@ -10,7 +10,10 @@
 package blanco.pinia.task;
 
 import blanco.cg.BlancoCgSupportedLang;
-import blanco.pinia.*;
+import blanco.pinia.BlancoPiniaConstants;
+import blanco.pinia.BlancoPiniaMeta2Xml;
+import blanco.pinia.BlancoPiniaUtil;
+import blanco.pinia.BlancoPiniaXml2TypeScriptClass;
 import blanco.pinia.message.BlancoPiniaMessage;
 import blanco.pinia.task.valueobject.BlancoPiniaProcessInput;
 import blanco.pinia.valueobject.BlancoPiniaClassStructure;
@@ -18,8 +21,6 @@ import blanco.pinia.valueobject.BlancoPiniaClassStructure;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlancoPiniaProcessImpl implements BlancoPiniaProcess {
 
@@ -121,6 +122,7 @@ public class BlancoPiniaProcessImpl implements BlancoPiniaProcess {
          */
             BlancoPiniaUtil.isVerbose = input.getVerbose();
             BlancoPiniaUtil.isStrictNullable = input.getStrictNullable();
+            BlancoPiniaUtil.supportedPiniaVersion = input.getSupportedPiniaVersion();
             BlancoPiniaUtil.processValueObjects(input);
 
             BlancoPiniaUtil.targetSubdir = input.getTargetSubdir();

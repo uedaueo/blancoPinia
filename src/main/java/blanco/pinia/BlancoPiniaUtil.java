@@ -18,6 +18,7 @@ public class BlancoPiniaUtil {
 
     static public boolean isVerbose = false;
     static public boolean isStrictNullable = false;
+    static public int supportedPiniaVersion = BlancoPiniaConstants.PINIA_MAJOR_VERSION_1;
 
     static public String targetSubdir = "store";
 

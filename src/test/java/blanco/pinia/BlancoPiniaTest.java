@@ -61,6 +61,7 @@ public class BlancoPiniaTest {
         inputStore.setTabs(2);
         inputStore.setVerbose(true);
         inputStore.setStrictNullable(true);
+        inputStore.setSupportedPiniaVersion(2);
 
         BlancoPiniaProcessImpl imple2 = new BlancoPiniaProcessImpl();
         try {

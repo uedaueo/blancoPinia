@@ -302,6 +302,10 @@ public class BlancoPiniaXmlParser {
              * Add imports to defineGetters file.
              */
             BlancoPiniaUtil.addImportHeaderList("StateTree", "pinia", namedExportedHeaderList);
+            if (BlancoPiniaUtil.supportedPiniaVersion >= BlancoPiniaConstants.PINIA_MAJOR_VERSION_2) {
+                BlancoPiniaUtil.addImportHeaderList("_GettersTree", "pinia", namedExportedHeaderList);
+                BlancoPiniaUtil.addImportHeaderList("UnwrapRef", "vue", namedExportedHeaderList);
+            }
             BlancoPiniaUtil.addImportHeaderList(stateFileName, "./" + stateFileName, namedExportedHeaderList);
 
             // Get headers user defined.

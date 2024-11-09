@@ -89,6 +89,11 @@ public class BlancoPiniaTask extends Task {
     protected boolean fIsFieldStrictNullableProcessed = false;
 
     /**
+     * フィールド [supportedPiniaVersion] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldSupportedPiniaVersionProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -421,6 +426,36 @@ public class BlancoPiniaTask extends Task {
     }
 
     /**
+     * Antタスクの[supportedPiniaVersion]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 13<br>
+     * Support する Pinia の最低メジャーバージョンを指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setSupportedPiniaVersion(final String arg) {
+        try {
+            fInput.setSupportedPiniaVersion(Integer.parseInt(arg));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Antタスクの[supportedPiniaVersion]アトリビュートに与えられた値の数値解析に失敗しました。" + e.toString());
+        }
+        fIsFieldSupportedPiniaVersionProcessed = true;
+    }
+
+    /**
+     * Antタスクの[supportedPiniaVersion]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 13<br>
+     * Support する Pinia の最低メジャーバージョンを指定します。<br>
+     * デフォルト値[1]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getSupportedPiniaVersion() {
+        return String.valueOf(fInput.getSupportedPiniaVersion());
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -448,6 +483,7 @@ public class BlancoPiniaTask extends Task {
             System.out.println("- searchTmpdir:[" + getSearchTmpdir() + "]");
             System.out.println("- targetSubdir:[" + getTargetSubdir() + "]");
             System.out.println("- strictNullable:[" + getStrictNullable() + "]");
+            System.out.println("- supportedPiniaVersion:[" + getSupportedPiniaVersion() + "]");
         }
 
         try {

@@ -106,6 +106,14 @@ public class BlancoPiniaProcessInput {
     private boolean fStrictNullable = false;
 
     /**
+     * Support する Pinia の最低メジャーバージョンを指定します。
+     *
+     * フィールド: [supportedPiniaVersion]。
+     * デフォルト: [1]。
+     */
+    private int fSupportedPiniaVersion = 1;
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -402,6 +410,29 @@ public class BlancoPiniaProcessInput {
     }
 
     /**
+     * フィールド [supportedPiniaVersion] の値を設定します。
+     *
+     * フィールドの説明: [Support する Pinia の最低メジャーバージョンを指定します。]。
+     *
+     * @param argSupportedPiniaVersion フィールド[supportedPiniaVersion]に設定する値。
+     */
+    public void setSupportedPiniaVersion(final int argSupportedPiniaVersion) {
+        fSupportedPiniaVersion = argSupportedPiniaVersion;
+    }
+
+    /**
+     * フィールド [supportedPiniaVersion] の値を取得します。
+     *
+     * フィールドの説明: [Support する Pinia の最低メジャーバージョンを指定します。]。
+     * デフォルト: [1]。
+     *
+     * @return フィールド[supportedPiniaVersion]から取得した値。
+     */
+    public int getSupportedPiniaVersion() {
+        return fSupportedPiniaVersion;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -429,6 +460,7 @@ public class BlancoPiniaProcessInput {
         buf.append(",searchTmpdir=" + fSearchTmpdir);
         buf.append(",targetSubdir=" + fTargetSubdir);
         buf.append(",strictNullable=" + fStrictNullable);
+        buf.append(",supportedPiniaVersion=" + fSupportedPiniaVersion);
         buf.append("]");
         return buf.toString();
     }
@@ -490,5 +522,8 @@ public class BlancoPiniaProcessInput {
         // Name: fStrictNullable
         // Type: boolean
         target.fStrictNullable = this.fStrictNullable;
+        // Name: fSupportedPiniaVersion
+        // Type: int
+        target.fSupportedPiniaVersion = this.fSupportedPiniaVersion;
     }
 }

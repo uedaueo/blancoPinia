@@ -120,6 +120,7 @@ public class BlancoPiniaProcessImpl implements BlancoPiniaProcess {
          * The reason is that in the PHP-style definitions, the package name is not specified when specifying a class.
          */
             BlancoPiniaUtil.isVerbose = input.getVerbose();
+            BlancoPiniaUtil.isStrictNullable = input.getStrictNullable();
             BlancoPiniaUtil.processValueObjects(input);
 
             BlancoPiniaUtil.targetSubdir = input.getTargetSubdir();

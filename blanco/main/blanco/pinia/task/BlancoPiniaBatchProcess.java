@@ -80,6 +80,8 @@ public class BlancoPiniaBatchProcess {
                 input.setSearchTmpdir(arg.substring(14));
             } else if (arg.startsWith("-targetSubdir=")) {
                 input.setTargetSubdir(arg.substring(14));
+            } else if (arg.startsWith("-strictNullable=")) {
+                input.setStrictNullable(Boolean.valueOf(arg.substring(16)).booleanValue());
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -173,7 +175,7 @@ public class BlancoPiniaBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoPiniaBatchProcess: Usage:");
-        System.out.println("  java blanco.pinia.task.BlancoPiniaBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -lineSeparator=value10 -searchTmpdir=value11 -targetSubdir=value12");
+        System.out.println("  java blanco.pinia.task.BlancoPiniaBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -lineSeparator=value10 -searchTmpdir=value11 -targetSubdir=value12 -strictNullable=value13");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -220,6 +222,10 @@ public class BlancoPiniaBatchProcess {
         System.out.println("      explanation[配置・実装ディレクトリのサブディレクトリを指定します。]");
         System.out.println("      type[string]");
         System.out.println("      default value[store]");
+        System.out.println("    -strictNullable");
+        System.out.println("      explanation[Nullable な property に対して、? の付与をやめて | undefined | null の定義を行う。false の場合は ? が付与されて | undefined のみ付与される。]");
+        System.out.println("      type[boolean]");
+        System.out.println("      default value[false]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");
     }

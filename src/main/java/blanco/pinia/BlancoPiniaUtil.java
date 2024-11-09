@@ -17,6 +17,7 @@ import java.util.*;
 public class BlancoPiniaUtil {
 
     static public boolean isVerbose = false;
+    static public boolean isStrictNullable = false;
 
     static public String targetSubdir = "store";
 

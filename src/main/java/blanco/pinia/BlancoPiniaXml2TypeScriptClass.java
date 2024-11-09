@@ -336,6 +336,7 @@ public class BlancoPiniaXml2TypeScriptClass {
                 .getPackage(), argClassStructure.getFileDescription());
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoPiniaUtil.isStrictNullable);
 
         // Create interface first.
         fCgInterface = fCgFactory.createInterface(stateType, fBundle.getXml2sourceFileStateDefine());
@@ -386,7 +387,8 @@ public class BlancoPiniaXml2TypeScriptClass {
                 if (loopCount > 0) {
                     stateBuf.append("," + this.getLineSeparator());
                 }
-                stateBuf.append(this.getTabSpace() + stateStructure.getName() + (isNullable ? "?:" : ": "));
+                /* always should not print "?" */
+                stateBuf.append(this.getTabSpace() + stateStructure.getName() + ": ");
                 stateBuf.append(stateStructure.getDefault());
             }
             loopCount++;
@@ -448,6 +450,7 @@ public class BlancoPiniaXml2TypeScriptClass {
                 .getPackage(), argClassStructure.getFileDescription());
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoPiniaUtil.isStrictNullable);
 
         // Create class just for filename define
         fCgClass = fCgFactory.createClass(gettersDefineName, null);
@@ -461,8 +464,13 @@ public class BlancoPiniaXml2TypeScriptClass {
         // declare getters tree type
         plainTextList.add("/** " + fBundle.getXml2sourceFileGettersDefine() + " */");
         plainTextList.add("export declare type " + gettersTree + "<S extends StateTree> = {");
+        int i = 0;
         for (List<BlancoPiniaGettersStructure> gettersStructureList : argClassStructure.getGettersList()) {
+            if (i > 0) {
+                addCommaToListString(plainTextList);
+            }
             defineGetters(plainTextList, gettersStructureList);
+            i++;
         }
         plainTextList.add("}");
 
@@ -547,6 +555,7 @@ public class BlancoPiniaXml2TypeScriptClass {
                 .getPackage(), argClassStructure.getFileDescription());
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoPiniaUtil.isStrictNullable);
 
         // Create class just for filename define
         fCgClass = fCgFactory.createClass(actionsDefineName, null);
@@ -664,6 +673,7 @@ public class BlancoPiniaXml2TypeScriptClass {
     }
 
     private void defineGetters(List<String> argListText, List<BlancoPiniaGettersStructure> gettersStructureList) {
+        /* Not support Nullable on lesser pinia2 mode, but keep it for compatible. */
         int size = gettersStructureList.size();
         BlancoPiniaGettersStructure firstStructure = gettersStructureList.get(0);
         argListText.add(firstStructure.getName() + "(state: S): {");
@@ -679,12 +689,18 @@ public class BlancoPiniaXml2TypeScriptClass {
             if (i > 1) {
                 addCommaToListString(argListText);
             }
+            if (gettersStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
+                type = type + " | undefined | null";
+            }
             argListText.add(gettersStructure.getName() + ": " + type);
         }
         String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
         String firstGenerics = firstStructure.getGeneric();
         if (BlancoStringUtil.null2Blank(firstGenerics).length() > 0) {
             firstType = firstType + "<" + BlancoPiniaUtil.getSimpleClassName(firstGenerics) + ">";
+        }
+        if (firstStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
+            firstType = firstType + " | undefined | null";
         }
         argListText.add("): " + firstType);
         argListText.add("}");
@@ -704,12 +720,29 @@ public class BlancoPiniaXml2TypeScriptClass {
             if (i > 1) {
                 addCommaToListString(argListText);
             }
-            argListText.add(actionsStructure.getName() + (actionsStructure.getNullable() ? "?: " : ": ") + type);
+            String typeSeparator = ": ";
+            if (actionsStructure.getNullable()) {
+                if (BlancoPiniaUtil.isStrictNullable) {
+                    type = type + " | undefined | null";
+                } else {
+                    typeSeparator = "?: ";
+                }
+            }
+            argListText.add(actionsStructure.getName() + typeSeparator + type);
         }
         String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
         String firstGenerics = firstStructure.getGeneric();
         if (BlancoStringUtil.null2Blank(firstGenerics).length() > 0) {
             firstType = firstType + "<" + BlancoPiniaUtil.getSimpleClassName(firstGenerics) + ">";
+        }
+        if (firstStructure.getNullable()) {
+            if (BlancoPiniaUtil.isStrictNullable) {
+                firstType = firstType + " | undefined | null";
+            }
+            /* this change may be breaking */
+//            else {
+//                firstType = firstType + " | undefined";
+//            }
         }
         if (firstStructure.getAsync()) {
             firstType = "Promise<" + firstType + ">";

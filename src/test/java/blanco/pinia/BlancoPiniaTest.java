@@ -40,6 +40,7 @@ public class BlancoPiniaTest {
         input.setTabs(2);
         input.setVerbose(true);
         input.setLineSeparator("LF");
+        input.setStrictNullable(true);
 
         BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();
         try {
@@ -48,7 +49,7 @@ public class BlancoPiniaTest {
             e.printStackTrace();
         }
 
-        /* Next, creates a VueComponent. */
+        /* Next, creates a pinia stores. */
         BlancoPiniaProcessInput inputStore = new BlancoPiniaProcessInput();
         inputStore.setMetadir("meta/stores");
         inputStore.setEncoding("UTF-8");
@@ -59,6 +60,7 @@ public class BlancoPiniaTest {
         inputStore.setTargetStyle("free");
         inputStore.setTabs(2);
         inputStore.setVerbose(true);
+        inputStore.setStrictNullable(true);
 
         BlancoPiniaProcessImpl imple2 = new BlancoPiniaProcessImpl();
         try {

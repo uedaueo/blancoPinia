@@ -697,10 +697,14 @@ public class BlancoPiniaXml2TypeScriptClass {
             if (i > 1) {
                 addCommaToListString(argListText);
             }
-            if (gettersStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
-                type = type + " | undefined | null";
+            String typeSeparator = ": ";
+            if (gettersStructure.getNullable()) {
+                typeSeparator = "?: ";
+                if (BlancoPiniaUtil.isStrictNullable) {
+                    type = type + " | undefined | null";
+                }
             }
-            argListText.add(gettersStructure.getName() + ": " + type);
+            argListText.add(gettersStructure.getName() + typeSeparator + type);
         }
         String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
         String firstGenerics = firstStructure.getGeneric();
@@ -731,10 +735,14 @@ public class BlancoPiniaXml2TypeScriptClass {
             if (i > 1) {
                 addCommaToListString(argListText);
             }
-            if (gettersStructure.getNullable() && BlancoPiniaUtil.isStrictNullable) {
-                type = type + " | undefined | null";
+            String typeSeparator = ": ";
+            if (gettersStructure.getNullable()) {
+                typeSeparator = "?: ";
+                if (BlancoPiniaUtil.isStrictNullable) {
+                    type = type + " | undefined | null";
+                }
             }
-            argListText.add(gettersStructure.getName() + ": " + type);
+            argListText.add(gettersStructure.getName() + typeSeparator + type);
         }
         String firstType = BlancoPiniaUtil.getSimpleClassName(firstStructure.getType());
         String firstGenerics = firstStructure.getGeneric();
@@ -764,10 +772,9 @@ public class BlancoPiniaXml2TypeScriptClass {
             }
             String typeSeparator = ": ";
             if (actionsStructure.getNullable()) {
+                typeSeparator = "?: ";
                 if (BlancoPiniaUtil.isStrictNullable) {
                     type = type + " | undefined | null";
-                } else {
-                    typeSeparator = "?: ";
                 }
             }
             argListText.add(actionsStructure.getName() + typeSeparator + type);
